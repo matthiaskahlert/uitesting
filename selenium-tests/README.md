@@ -1,0 +1,1 @@
+most of my planned tests can be executed with selenium
