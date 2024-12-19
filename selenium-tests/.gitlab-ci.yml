@@ -1,1 +1,16 @@
 # file for the ci pipeline config
+
+stages:
+  - test
+
+test:
+  stage: test
+  image: python:3.9
+  before_script:
+    - pip install -r requirements.txt
+    - apt-get update && apt-get install -y wget unzip
+    - wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+    - unzip chromedriver_linux64.zip -d /usr/local/bin/
+    - chmod +x /usr/local/bin/chromedriver
+  script:
+    - pytest tests/
