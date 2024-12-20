@@ -25,12 +25,23 @@ jobs:
       - name: Install Chrome and ChromeDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          sudo apt-get install -y chromium-chromedriver
-          ls -l /usr/bin/chromedriver
-          test -x /usr/bin/chromedriver && echo "Chromedriver funktioniert." || echo "Chromedriver funktioniert nicht."
+          sudo apt-get install -y google-chrome-stable chromium-chromedriver
+          
+          # Überprüfe, ob Google Chrome und Chromedriver korrekt installiert sind
+          if [ ! -f /usr/bin/google-chrome ]; then
+            echo "Google Chrome wurde nicht korrekt installiert."
+            exit 1
+          fi
+          
+          if [ ! -f /usr/bin/chromedriver ]; then
+            echo "Chromedriver wurde nicht korrekt installiert."
+            exit 1
+          fi
 
-          # Überprüfe die Versionen von Chrome und Chromedriver
+          # Setze Chromedriver-Symlink
+          sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+          
+          # Überprüfe die Versionen
           google-chrome --version
           /usr/bin/chromedriver --version
           
