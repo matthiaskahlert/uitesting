@@ -20,17 +20,21 @@ def test_dynamic_id():
    #  driver = webdriver.Chrome(service=service, options=chrome_options)
 	
 	# Testlogik
-	try: 
-		driver.get("http://uitestingplayground.com/dynamicid")
-		
-		# Look for a Button with a dynamic ID
-		button = driver.find_element(By.XPATH, "//button[contains(text(),'Button')]")
-		assert button is not None, "Button nicht gefunden"
-		button.click()
-		# Optional: Validierung nach dem Klick (wenn notwendig)
+    try:
+        # Testlogik
+        driver.get("http://uitestingplayground.com/dynamicid")
+        
+        # Look for a Button with a dynamic ID
+        button = driver.find_element(By.XPATH, "//button[contains(text(),'Button')]")
+        assert button is not None, "Button nicht gefunden"
+        
+        # Klick auf den Button
+        button.click()
+
+        # Optional: Validierung nach dem Klick (wenn notwendig)
         # e.g., prüfen, ob eine neue Seite geladen wurde
         # new_element = driver.find_element(By.ID, "expectedElementId")
         # assert new_element is not None, "Expected element not found after click"
-	finally:
-		# Teardown: Driver schließen, selbst bei Fehlern
-		driver.quit()
+    finally:
+        # Teardown: Driver schließen, selbst bei Fehlern
+        driver.quit()
