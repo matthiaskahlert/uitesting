@@ -28,7 +28,11 @@ jobs:
           sudo apt-get install -y google-chrome-stable
           sudo apt-get install -y chromium-chromedriver
           ls -l /usr/bin/chromedriver
-          ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+          test -x /usr/bin/chromedriver && echo "Chromedriver funktioniert." || echo "Chromedriver funktioniert nicht."
+
+          # Überprüfe die Versionen von Chrome und Chromedriver
+          google-chrome --version
+          /usr/bin/chromedriver --version
           
       - name: Install dependencies
         run: |
