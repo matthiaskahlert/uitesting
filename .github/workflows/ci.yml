@@ -18,27 +18,15 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install ChromeDriver and Google Chrome
+      - name: Install Google Chrome
         run: |
-          sudo apt-get update && sudo apt-get install -y wget unzip
-          wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip -d /usr/local/bin/
-          chmod +x /usr/local/bin/chromedriver
-
-          # Symbolic link to /usr/bin/chromedriver
-          sudo ln -sf /usr/local/bin/chromedriver /usr/bin/chromedriver
-
-          # Install Google Chrome
-          sudo apt-get install -y google-chrome-stable
-
-          # Verify installation
-          /usr/local/bin/chromedriver --version
+          sudo apt-get update && sudo apt-get install -y wget unzip google-chrome-stable
           google-chrome --version
           
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r selenium-tests/requirements.txt
+          pip install selenium pytest
 
       - name: Run Tests
         run: |
