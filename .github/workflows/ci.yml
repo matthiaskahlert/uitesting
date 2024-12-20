@@ -8,10 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      selenium:
-        image: selenium/standalone-chrome:latest
-        options: --shm-size=2g
         
     steps:
       - name: Check out repository
@@ -21,13 +17,16 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-          
-      - name: Install Chrome and ChromeDriver
+
+      - name: Install ChromeDriver and Google Chrome
         run: |
           sudo apt-get update && sudo apt-get install -y wget unzip
           wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip -d /usr/local/bin/
           chmod +x /usr/local/bin/chromedriver
+
+          # Symbolic link to /usr/bin/chromedriver
+          sudo ln -sf /usr/local/bin/chromedriver /usr/bin/chromedriver
 
           # Install Google Chrome
           sudo apt-get install -y google-chrome-stable
@@ -35,13 +34,6 @@ jobs:
           # Verify installation
           /usr/local/bin/chromedriver --version
           google-chrome --version
-
-          # Setze Chromedriver-Symlink
-          sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
-          
-          # Überprüfe die Versionen
-          google-chrome --version
-          /usr/bin/chromedriver --version
           
       - name: Install dependencies
         run: |
